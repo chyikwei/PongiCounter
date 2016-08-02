@@ -10,14 +10,8 @@
     tools:context="com.ponpongi.pongicounter.MainActivity"
     android:clickable="false">
 
-    <GridView android:id="@+id/main_grid"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/card_grid"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:columnWidth="120dp"
-        android:numColumns="auto_fit"
-        android:verticalSpacing="20dp"
-        android:horizontalSpacing="20dp"
-        android:stretchMode="columnWidth"
-        android:gravity="center"
-        />
+        android:layout_height="match_parent" />
 </RelativeLayout>

@@ -7,67 +7,52 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.TextView;
+import android.support.v7.widget.RecyclerView.Adapter;
+import android.widget.Toast;
+
+import java.util.List;
 
 /**
  * Created by chyikwei on 7/30/2016.
  *
  * Adapter for grid view
  */
-public class ItemAdapter extends BaseAdapter{
+public class ItemAdapter extends Adapter<CounterViewHolder>{
 
-    private Context mContext;
-    private LayoutInflater myInflater;
-    private CounterItem[] items;
+    private List<CounterItem> items;
 
-    private class ViewHolder {
-        TextView txtTitle;
-        TextView txtCount;
-        public ViewHolder(TextView title, TextView count) {
-            this.txtTitle = title;
-            this.txtCount = count;
-        }
-    }
-
-    public ItemAdapter(Context c, CounterItem[] items) {
-        this.mContext = c;
-        this.myInflater = (LayoutInflater) c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    public ItemAdapter(List<CounterItem> items) {
         this.items = items;
     }
 
-    public int getCount() {
-        return items.length;
+    @Override
+    public int getItemCount() {
+        return items.size();
     }
 
-    public Object getItem(int position) {
-        if (position >= items.length) {
-            return null;
-        } else {
-            return items[position];
-        }
+    @Override
+    public void onBindViewHolder(final CounterViewHolder viewHolder, int i) {
+        final CounterItem item = items.get(i);
+        viewHolder.title.setText(item.getName());
+        viewHolder.count.setText(item.getStrCount());
+
+        viewHolder.itemView.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        item.increment();
+                        viewHolder.count.setText(item.getStrCount());
+                    }
+                }
+        );
     }
 
-    public long getItemId(int position) {
-        return 0;
-    }
+    @Override
+    public CounterViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+        View itemView = LayoutInflater.
+                from(viewGroup.getContext()).
+                inflate(R.layout.card_item, viewGroup, false);
 
-    // create a new ImageView for each item referenced by the Adapter
-    public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder vd;
-        if (convertView == null) {
-            // if it's not recycled, initialize some attributes
-            convertView = myInflater.inflate(R.layout.grid_item, null);
-            vd = new ViewHolder(
-                    (TextView) convertView.findViewById(R.id.item_title),
-                    (TextView) convertView.findViewById(R.id.item_count)
-            );
-            convertView.setTag(vd);
-        } else {
-            vd = (ViewHolder) convertView.getTag();
-        }
-        // set data
-        CounterItem item = items[position];
-        vd.txtTitle.setText(item.getName());
-        vd.txtCount.setText(Integer.toString(item.getCount()));
-        return convertView;
+        return new CounterViewHolder(itemView);
     }
 }

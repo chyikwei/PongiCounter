@@ -22,6 +22,10 @@ public class CounterItem {
         return count;
     }
 
+    public String getStrCount() {
+        return Integer.toString(count);
+    }
+
     public void increment() {
         count += 1;
     }
