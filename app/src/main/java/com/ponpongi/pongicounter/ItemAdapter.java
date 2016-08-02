@@ -1,6 +1,7 @@
 package com.ponpongi.pongicounter;
 
 import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -15,10 +16,21 @@ import android.widget.TextView;
 public class ItemAdapter extends BaseAdapter{
 
     private Context mContext;
+    private LayoutInflater myInflater;
     private CounterItem[] items;
+
+    private class ViewHolder {
+        TextView txtTitle;
+        TextView txtCount;
+        public ViewHolder(TextView title, TextView count) {
+            this.txtTitle = title;
+            this.txtCount = count;
+        }
+    }
 
     public ItemAdapter(Context c, CounterItem[] items) {
         this.mContext = c;
+        this.myInflater = (LayoutInflater) c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.items = items;
     }
 
@@ -27,7 +39,11 @@ public class ItemAdapter extends BaseAdapter{
     }
 
     public Object getItem(int position) {
-        return null;
+        if (position >= items.length) {
+            return null;
+        } else {
+            return items[position];
+        }
     }
 
     public long getItemId(int position) {
@@ -36,17 +52,22 @@ public class ItemAdapter extends BaseAdapter{
 
     // create a new ImageView for each item referenced by the Adapter
     public View getView(int position, View convertView, ViewGroup parent) {
-        TextView textView;
+        ViewHolder vd;
         if (convertView == null) {
             // if it's not recycled, initialize some attributes
-            textView = new TextView(mContext);
-            textView.setLayoutParams(new GridView.LayoutParams(240, 240));
-            textView.setPadding(1, 1, 1, 1);
+            convertView = myInflater.inflate(R.layout.grid_item, null);
+            vd = new ViewHolder(
+                    (TextView) convertView.findViewById(R.id.item_title),
+                    (TextView) convertView.findViewById(R.id.item_count)
+            );
+            convertView.setTag(vd);
         } else {
-            textView = (TextView) convertView;
+            vd = (ViewHolder) convertView.getTag();
         }
-
-        textView.setText(items[position].toString());
-        return textView;
+        // set data
+        CounterItem item = items[position];
+        vd.txtTitle.setText(item.getName());
+        vd.txtCount.setText(Integer.toString(item.getCount()));
+        return convertView;
     }
 }

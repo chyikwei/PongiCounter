@@ -12,6 +12,8 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
+    //ViewHolder vd;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,15 +27,18 @@ public class MainActivity extends AppCompatActivity {
                 new CounterItem("Item 3")
         };
         GridView gv = (GridView) findViewById(R.id.main_grid);
-        gv.setAdapter(new ItemAdapter(this, items));
+        gv.setAdapter(new ItemAdapter(MainActivity.this, items));
 
         gv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long id) {
-                items[pos].increment();
-                TextView tv = (TextView) view;
-                tv.setText(items[pos].toString());
-                Toast.makeText(context, items[pos].toString(), Toast.LENGTH_SHORT).show();
+                CounterItem item = items[pos];
+                item.increment();
+                TextView it = (TextView) view.findViewById(R.id.item_title);
+                TextView ic = (TextView) view.findViewById(R.id.item_count);
+                it.setText(item.getName());
+                ic.setText((Integer.toString(item.getCount())));
+                Toast.makeText(context, item.toString(), Toast.LENGTH_SHORT).show();
             }
         });
     }
