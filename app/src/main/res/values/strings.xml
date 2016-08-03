@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Pongi Counter</string>
     <string name="app_history">History</string>
-    <string name="menu_list_view">ListView</string>
+    <string name="menu_list_view">List View</string>
+    <string name="menu_add">Add New</string>
+    <string name="fragment_add_title">New Counter:</string>
 
 </resources>
