@@ -1,22 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/edit_name"
     android:orientation="vertical"
     android:layout_width="@dimen/dialog_width"
     android:layout_height="@dimen/dialog_height"
-    android:layout_margin="@dimen/dialog_margin"
     android:layout_gravity="center">
 
     <TextView
-        android:id="@+id/your_counter_name"
+        android:id="@+id/edit_title"
         android:text="@string/fragment_add_title"
         android:textSize="@dimen/dialog_text_size"
+        android:layout_alignParentTop="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         />
 
     <EditText
         android:id="@+id/fragment_title_name"
+        android:layout_below="@+id/edit_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="text"
@@ -24,4 +25,23 @@
         android:imeOptions="actionDone"
         />
 
-</LinearLayout>
+    <Button
+        android:id="@+id/fragment_ok"
+        android:layout_below="@id/fragment_title_name"
+        android:layout_alignParentRight="true"
+        android:text="@string/btn_ok"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="?android:attr/borderlessButtonStyle"/>
+
+
+    <Button
+        android:id="@+id/fragment_cancel"
+        android:text="@string/btn_cancel"
+        android:layout_below="@id/fragment_title_name"
+        android:layout_toLeftOf="@+id/fragment_ok"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="?android:attr/borderlessButtonStyle"/>
+
+</RelativeLayout>

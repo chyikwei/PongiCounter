@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
@@ -15,13 +16,15 @@ import android.widget.TextView.OnEditorActionListener;
 /**
  * Created by chyikwei on 8/2/2016.
  */
-public class AddItemDialogFragment extends DialogFragment implements OnEditorActionListener {
+public class AddItemDialogFragment extends DialogFragment {
 
     public interface EditNewItemDialogListener {
         void onFinishEditDialog(String inputText);
     }
 
     private EditText mEditText;
+    private Button okButton;
+    private Button cancelButton;
 
     public AddItemDialogFragment() {
         //empty
@@ -32,17 +35,35 @@ public class AddItemDialogFragment extends DialogFragment implements OnEditorAct
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_add_item, container);
         mEditText = (EditText) view.findViewById(R.id.fragment_title_name);
+        okButton = (Button) view.findViewById(R.id.fragment_ok);
+        cancelButton = (Button) view.findViewById(R.id.fragment_cancel);
         getDialog().setTitle("New Item");
+        getDialog().setCanceledOnTouchOutside(true);
+
+        okButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                EditNewItemDialogListener activity = (EditNewItemDialogListener) getActivity();
+                activity.onFinishEditDialog(mEditText.getText().toString());
+                getDialog().dismiss();
+                return;
+            }
+        });
+
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                getDialog().dismiss();
+                return;
+            }
+        });
 
         // Show soft keyboard automatically
         mEditText.requestFocus();
         getDialog().getWindow().setSoftInputMode(
                 WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
-        mEditText.setOnEditorActionListener(this);
 
         return view;
     }
-
+    /*
     @Override
     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
         if (EditorInfo.IME_ACTION_DONE == actionId) {
@@ -54,4 +75,5 @@ public class AddItemDialogFragment extends DialogFragment implements OnEditorAct
         }
         return false;
     }
+    */
 }
