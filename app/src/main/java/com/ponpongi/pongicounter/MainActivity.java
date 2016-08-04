@@ -1,23 +1,31 @@
 package com.ponpongi.pongicounter;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
 import android.view.Menu;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.ponpongi.pongicounter.AddItemDialogFragment.EditNewItemDialogListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.lang.reflect.Type;
 
 public class MainActivity extends AppCompatActivity implements EditNewItemDialogListener {
 
+    private static final String PREF_NAME = "com.ponpongi.pongicounter.perference";
+    private static final String PREF_KEY = "com.ponpongi.pongicounter.data_list";
+    private static final String TAG = "MainActivity";
     private StaggeredGridLayoutManager sg_manager;
     private ItemAdapter adapter;
     List<CounterItem> data_list;
@@ -28,12 +36,17 @@ public class MainActivity extends AppCompatActivity implements EditNewItemDialog
         setContentView(R.layout.activity_main);
         final Context context = getApplicationContext();
 
-        // references to our images
-        data_list = new ArrayList<CounterItem>();
-        //TODO: load real data
-        for (int i=1; i <= 2; i++) {
-            data_list.add(new CounterItem("Item " + i));
+        //load data
+        SharedPreferences pref = getApplicationContext().getSharedPreferences(PREF_NAME, MODE_PRIVATE);
+        String dataString = pref.getString(PREF_KEY, "");
+        Log.v(TAG, "load data:" + dataString);
+        if (dataString.length() > 0) {
+            Type listType = new TypeToken<ArrayList<CounterItem>>(){}.getType();
+            data_list = new Gson().fromJson(dataString, listType);
+        } else {
+            data_list = new ArrayList<CounterItem>();
         }
+
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.card_grid);
         recyclerView.setHasFixedSize(true);
         sg_manager = new StaggeredGridLayoutManager(2, 1);
@@ -41,6 +54,20 @@ public class MainActivity extends AppCompatActivity implements EditNewItemDialog
 
         adapter = new ItemAdapter(data_list);
         recyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        //store data
+        SharedPreferences pref = getApplicationContext().getSharedPreferences(PREF_NAME, MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        Gson gson = new Gson();
+        String jsonInString = gson.toJson(data_list);
+        Log.i(TAG, "Save data: " + jsonInString);
+        editor.putString(PREF_KEY, jsonInString);
+        editor.commit();
     }
 
     @Override
@@ -72,8 +99,8 @@ public class MainActivity extends AppCompatActivity implements EditNewItemDialog
 
     @Override
     public void onFinishEditDialog(String inputText) {
-        data_list.add(new CounterItem(inputText));
-        adapter.notifyItemInserted(data_list.size() - 1);
+        data_list.add(0, new CounterItem(inputText));
+        adapter.notifyDataSetChanged();
 
         Toast.makeText(this, "Add item " + inputText, Toast.LENGTH_SHORT).show();
     }

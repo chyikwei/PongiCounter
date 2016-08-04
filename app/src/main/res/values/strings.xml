@@ -3,7 +3,8 @@
     <string name="app_history">History</string>
     <string name="menu_list_view">List View</string>
     <string name="menu_add">Add New</string>
-    <string name="fragment_add_title">New Counter:</string>
+    <string name="fragment_hint">Counter Name</string>
+
     <string name="btn_ok">Ok</string>
     <string name="btn_cancel">Cancel</string>
 
