@@ -13,4 +13,7 @@
     <dimen name="card_margin">4dp</dimen>
     <dimen name="card_title_size">40sp</dimen>
     <dimen name="card_count_size">20sp</dimen>
+    <dimen name="list_title_size">30sp</dimen>
+    <dimen name="list_count_size">30sp</dimen>
+
 </resources>

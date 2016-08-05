@@ -1,12 +1,14 @@
 package com.ponpongi.pongicounter;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.support.v7.widget.RecyclerView.LayoutManager;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.Menu;
 import android.support.v7.widget.RecyclerView;
@@ -25,8 +27,11 @@ public class MainActivity extends AppCompatActivity implements EditNewItemDialog
 
     private static final String PREF_NAME = "com.ponpongi.pongicounter.perference";
     private static final String PREF_KEY = "com.ponpongi.pongicounter.data_list";
+    private static final String PREF_ISCARDVIEW_KEY = "com.ponpongi.pongicounter.is_card_view";
     private static final String TAG = "MainActivity";
-    private StaggeredGridLayoutManager sg_manager;
+    private boolean isCardView;
+    private LayoutManager layoutManager;
+
     private ItemAdapter adapter;
     List<CounterItem> data_list;
 
@@ -34,7 +39,6 @@ public class MainActivity extends AppCompatActivity implements EditNewItemDialog
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        final Context context = getApplicationContext();
 
         //load data
         SharedPreferences pref = getApplicationContext().getSharedPreferences(PREF_NAME, MODE_PRIVATE);
@@ -46,14 +50,22 @@ public class MainActivity extends AppCompatActivity implements EditNewItemDialog
         } else {
             data_list = new ArrayList<CounterItem>();
         }
+        isCardView = pref.getBoolean(PREF_ISCARDVIEW_KEY, true);
+        Log.i(TAG, "load cardView: " + isCardView);
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.card_grid);
         recyclerView.setHasFixedSize(true);
-        sg_manager = new StaggeredGridLayoutManager(2, 1);
-        recyclerView.setLayoutManager(sg_manager);
-
-        adapter = new ItemAdapter(data_list);
+        if (isCardView) {
+            layoutManager = new StaggeredGridLayoutManager(2, 1);
+        } else {
+            layoutManager = new LinearLayoutManager(this);
+        }
+        recyclerView.setLayoutManager(layoutManager);
+        adapter = new ItemAdapter(data_list, isCardView);
         recyclerView.setAdapter(adapter);
+        if (!isCardView) {
+            setDragDrop();
+        }
     }
 
     @Override
@@ -67,6 +79,9 @@ public class MainActivity extends AppCompatActivity implements EditNewItemDialog
         String jsonInString = gson.toJson(data_list);
         Log.i(TAG, "Save data: " + jsonInString);
         editor.putString(PREF_KEY, jsonInString);
+        editor.putBoolean(PREF_ISCARDVIEW_KEY, isCardView);
+        Log.i(TAG, "Save cardView: " + isCardView);
+
         editor.commit();
     }
 
@@ -76,6 +91,29 @@ public class MainActivity extends AppCompatActivity implements EditNewItemDialog
         return true;
     }
 
+    private void setDragDrop() {
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.card_grid);
+        ItemTouchHelper.Callback callback =
+                new SimpleItemTouchHelperCallback(adapter);
+        ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
+        touchHelper.attachToRecyclerView(recyclerView);
+
+    }
+
+    private void setView(boolean isCardView) {
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.card_grid);
+        recyclerView.setHasFixedSize(true);
+        if (isCardView) {
+            layoutManager = new StaggeredGridLayoutManager(2, 1);
+        } else {
+            layoutManager = new LinearLayoutManager(this);
+        }
+        recyclerView.setLayoutManager(layoutManager);
+        adapter = new ItemAdapter(data_list, isCardView);
+        recyclerView.setAdapter(adapter);
+
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
@@ -83,7 +121,18 @@ public class MainActivity extends AppCompatActivity implements EditNewItemDialog
             case R.id.add_item:
                 showAddDialog();
                 return true;
+            case R.id.grid_item:
+                if (!isCardView) {
+                    isCardView = true;
+                    setView(isCardView);
+                }
+                return true;
             case R.id.list_item:
+                if (isCardView) {
+                    isCardView = false;
+                    setView(isCardView);
+                    setDragDrop();
+                }
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

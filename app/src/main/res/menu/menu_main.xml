@@ -12,6 +12,13 @@
         />
 
     <item
+        android:id="@+id/grid_item"
+        android:icon="@mipmap/ic_view_module_white_24dp"
+        android:title="@string/menu_grid_view"
+        app:showAsAction="always"
+        />
+
+    <item
         android:id="@+id/list_item"
         android:icon="@mipmap/ic_list_white_24dp"
         android:title="@string/menu_list_view"
