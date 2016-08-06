@@ -1,8 +1,11 @@
 package com.ponpongi.pongicounter;
 
+import android.app.Fragment;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,6 +18,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.ponpongi.pongicounter.AddItemDialogFragment.EditNewItemDialogListener;
@@ -30,47 +36,70 @@ public class MainActivity extends AppCompatActivity implements EditNewItemDialog
     private static final String PREF_ISCARDVIEW_KEY = "com.ponpongi.pongicounter.is_card_view";
     private static final String TAG = "MainActivity";
     private boolean isCardView;
-    private LayoutManager layoutManager;
-
-    private ItemAdapter adapter;
+    private DataUpdateNotifier dataUpdateNotifier;
     List<CounterItem> data_list;
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //load data
+        //load data from preference
         SharedPreferences pref = getApplicationContext().getSharedPreferences(PREF_NAME, MODE_PRIVATE);
+        data_list = load_data_list(pref);
+        isCardView = load_is_cardview(pref);
+
+        Log.i(TAG, "load cardView: " + isCardView);
+        if (isCardView) {
+            showCardView();
+        } else {
+            showListView();
+        }
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+    }
+
+    private List<CounterItem> load_data_list(SharedPreferences pref) {
+        List<CounterItem> data;
         String dataString = pref.getString(PREF_KEY, "");
         Log.v(TAG, "load data:" + dataString);
         if (dataString.length() > 0) {
-            Type listType = new TypeToken<ArrayList<CounterItem>>(){}.getType();
-            data_list = new Gson().fromJson(dataString, listType);
+            Type listType = new TypeToken<ArrayList<CounterItem>>() {
+            }.getType();
+            data = new Gson().fromJson(dataString, listType);
         } else {
-            data_list = new ArrayList<CounterItem>();
+            data = new ArrayList<CounterItem>();
         }
-        isCardView = pref.getBoolean(PREF_ISCARDVIEW_KEY, true);
-        Log.i(TAG, "load cardView: " + isCardView);
+        return data;
+    }
 
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.card_grid);
-        recyclerView.setHasFixedSize(true);
-        if (isCardView) {
-            layoutManager = new StaggeredGridLayoutManager(2, 1);
-        } else {
-            layoutManager = new LinearLayoutManager(this);
-        }
-        recyclerView.setLayoutManager(layoutManager);
-        adapter = new ItemAdapter(data_list, isCardView);
-        recyclerView.setAdapter(adapter);
-        if (!isCardView) {
-            setDragDrop();
-        }
+    private boolean load_is_cardview(SharedPreferences pref) {
+        return pref.getBoolean(PREF_ISCARDVIEW_KEY, true);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        Action viewAction = Action.newAction(
+                Action.TYPE_VIEW, // TODO: choose an action type.
+                "Main Page", // TODO: Define a title for the content shown.
+                // TODO: If you have web page content that matches this app activity's content,
+                // make sure this auto-generated web page URL is correct.
+                // Otherwise, set the URL to null.
+                Uri.parse("http://host/path"),
+                // TODO: Make sure this auto-generated app URL is correct.
+                Uri.parse("android-app://com.ponpongi.pongicounter/http/host/path")
+        );
+        AppIndex.AppIndexApi.end(client, viewAction);
 
         //store data
         SharedPreferences pref = getApplicationContext().getSharedPreferences(PREF_NAME, MODE_PRIVATE);
@@ -81,37 +110,16 @@ public class MainActivity extends AppCompatActivity implements EditNewItemDialog
         editor.putString(PREF_KEY, jsonInString);
         editor.putBoolean(PREF_ISCARDVIEW_KEY, isCardView);
         Log.i(TAG, "Save cardView: " + isCardView);
-
         editor.commit();
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client.disconnect();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
-    }
-
-    private void setDragDrop() {
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.card_grid);
-        ItemTouchHelper.Callback callback =
-                new SimpleItemTouchHelperCallback(adapter);
-        ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
-        touchHelper.attachToRecyclerView(recyclerView);
-
-    }
-
-    private void setView(boolean isCardView) {
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.card_grid);
-        recyclerView.setHasFixedSize(true);
-        if (isCardView) {
-            layoutManager = new StaggeredGridLayoutManager(2, 1);
-        } else {
-            layoutManager = new LinearLayoutManager(this);
-        }
-        recyclerView.setLayoutManager(layoutManager);
-        adapter = new ItemAdapter(data_list, isCardView);
-        recyclerView.setAdapter(adapter);
-
     }
 
     @Override
@@ -124,19 +132,34 @@ public class MainActivity extends AppCompatActivity implements EditNewItemDialog
             case R.id.grid_item:
                 if (!isCardView) {
                     isCardView = true;
-                    setView(isCardView);
+                    showCardView();
                 }
                 return true;
             case R.id.list_item:
                 if (isCardView) {
                     isCardView = false;
-                    setView(isCardView);
-                    setDragDrop();
+                    showListView();
                 }
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void showCardView() {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        CardViewFragment fragment = CardViewFragment.newInstance(data_list);
+        transaction.replace(R.id.main_fragment, fragment);
+        transaction.commit();
+        dataUpdateNotifier = fragment;
+    }
+
+    private void showListView() {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        ListViewFragment fragment = ListViewFragment.newInstance(data_list);
+        transaction.replace(R.id.main_fragment, fragment);
+        transaction.commit();
+        dataUpdateNotifier = fragment;
     }
 
     private void showAddDialog() {
@@ -149,8 +172,28 @@ public class MainActivity extends AppCompatActivity implements EditNewItemDialog
     @Override
     public void onFinishEditDialog(String inputText) {
         data_list.add(0, new CounterItem(inputText));
-        adapter.notifyDataSetChanged();
-
+        //adapter.notifyDataSetChanged();
+        dataUpdateNotifier.notifyDataUpdate(data_list);
         Toast.makeText(this, "Add item " + inputText, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client.connect();
+        Action viewAction = Action.newAction(
+                Action.TYPE_VIEW, // TODO: choose an action type.
+                "Main Page", // TODO: Define a title for the content shown.
+                // TODO: If you have web page content that matches this app activity's content,
+                // make sure this auto-generated web page URL is correct.
+                // Otherwise, set the URL to null.
+                Uri.parse("http://host/path"),
+                // TODO: Make sure this auto-generated app URL is correct.
+                Uri.parse("android-app://com.ponpongi.pongicounter/http/host/path")
+        );
+        AppIndex.AppIndexApi.start(client, viewAction);
     }
 }

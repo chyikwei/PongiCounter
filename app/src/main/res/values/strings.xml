@@ -1,12 +1,13 @@
 <resources>
+    <!--app-->
     <string name="app_name">Pongi Counter</string>
     <string name="app_history">History</string>
+    <!--menu-->
     <string name="menu_grid_view">Grid View</string>
     <string name="menu_list_view">List View</string>
     <string name="menu_add">Add New</string>
+    <!--add new fragment-->
     <string name="fragment_hint">Counter Name</string>
-
     <string name="btn_ok">Ok</string>
     <string name="btn_cancel">Cancel</string>
-
 </resources>
