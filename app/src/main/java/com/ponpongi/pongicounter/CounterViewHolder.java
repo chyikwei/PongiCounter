@@ -36,9 +36,9 @@ public class CounterViewHolder extends ViewHolder implements ItemTouchHelperView
     @Override
     public void onItemClear() {
         if (itemView instanceof CardView) {
-            ((CardView) itemView).setCardBackgroundColor(Color.WHITE);
+            ((CardView) itemView).setCardBackgroundColor(Color.TRANSPARENT);
         } else {
-            itemView.setBackgroundColor(Color.WHITE);
+            itemView.setBackgroundColor(Color.TRANSPARENT);
         }
     }
 }
