@@ -1,6 +1,5 @@
 package com.ponpongi.pongicounter;
 
-import android.app.Fragment;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.support.v4.app.DialogFragment;
@@ -8,13 +7,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.support.v7.widget.RecyclerView.LayoutManager;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.Menu;
-import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -24,6 +18,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.ponpongi.pongicounter.AddItemDialogFragment.EditNewItemDialogListener;
+import com.ponpongi.pongicounter.notifier.DataUpdateNotifier;
 
 import java.util.ArrayList;
 import java.util.List;

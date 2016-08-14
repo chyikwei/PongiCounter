@@ -1,16 +1,17 @@
 package com.ponpongi.pongicounter;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.ponpongi.pongicounter.notifier.DataUpdateNotifier;
+import com.ponpongi.pongicounter.touchHelper.SimpleItemTouchHelperCallback;
 
 import java.util.List;
 
@@ -20,7 +21,7 @@ import java.util.List;
  * Use the {@link ListViewFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ListViewFragment extends Fragment implements DataUpdateNotifier{
+public class ListViewFragment extends Fragment implements DataUpdateNotifier {
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
 

@@ -1,7 +1,6 @@
 package com.ponpongi.pongicounter;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
@@ -11,6 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.ponpongi.pongicounter.notifier.DataUpdateNotifier;
+import com.ponpongi.pongicounter.touchHelper.CardItemTouchHelperCallback;
+
 import java.util.List;
 
 
@@ -19,7 +21,7 @@ import java.util.List;
  * Use the {@link CardViewFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class CardViewFragment extends Fragment implements DataUpdateNotifier{
+public class CardViewFragment extends Fragment implements DataUpdateNotifier {
 
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;

@@ -1,4 +1,6 @@
-package com.ponpongi.pongicounter;
+package com.ponpongi.pongicounter.notifier;
+
+import com.ponpongi.pongicounter.CounterItem;
 
 import java.util.List;
 

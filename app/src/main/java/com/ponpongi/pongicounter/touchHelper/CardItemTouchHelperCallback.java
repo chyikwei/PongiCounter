@@ -1,4 +1,4 @@
-package com.ponpongi.pongicounter;
+package com.ponpongi.pongicounter.touchHelper;
 
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;

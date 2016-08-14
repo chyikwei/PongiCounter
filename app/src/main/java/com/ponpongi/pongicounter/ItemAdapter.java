@@ -1,15 +1,12 @@
 package com.ponpongi.pongicounter;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.GridView;
-import android.widget.TextView;
 import android.support.v7.widget.RecyclerView.Adapter;
-import android.widget.Toast;
 import android.util.Log;
+
+import com.ponpongi.pongicounter.touchHelper.ItemTouchHelperAdapter;
 
 import java.util.Collections;
 import java.util.List;
@@ -19,7 +16,7 @@ import java.util.List;
  *
  * Adapter for grid view
  */
-public class ItemAdapter extends Adapter<CounterViewHolder> implements ItemTouchHelperAdapter{
+public class ItemAdapter extends Adapter<CounterViewHolder> implements ItemTouchHelperAdapter {
 
     private List<CounterItem> items;
     private boolean isCardView;
@@ -107,13 +104,5 @@ public class ItemAdapter extends Adapter<CounterViewHolder> implements ItemTouch
             }
         }
         notifyItemMoved(fromPosition, toPosition);
-    }
-
-    @Override
-    public void onItemSelected() {
-    }
-
-    @Override
-    public void onItemClear() {
     }
 }
