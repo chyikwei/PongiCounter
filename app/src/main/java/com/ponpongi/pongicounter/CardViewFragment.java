@@ -5,7 +5,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,10 +60,16 @@ public class CardViewFragment extends Fragment implements DataUpdateNotifier{
         View view = inflater.inflate(R.layout.fragment_card_view, container, false);
         recyclerView = (RecyclerView) view.findViewById(R.id.card_view);
         recyclerView.setHasFixedSize(true);
-        layoutManager = new StaggeredGridLayoutManager(2, 1);
+        layoutManager = new GridLayoutManager(getContext(), 2);
         recyclerView.setLayoutManager(layoutManager);
         adapter = new ItemAdapter(data_list, true);
         recyclerView.setAdapter(adapter);
+
+        // drag and drop
+        ItemTouchHelper.Callback callback = new CardItemTouchHelperCallback(adapter);
+        ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
+        touchHelper.attachToRecyclerView(recyclerView);
+
         return view;
     }
 

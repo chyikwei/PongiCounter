@@ -31,7 +31,9 @@ public class CounterItem {
     }
 
     public void decrement() {
-        count -= 1;
+        if (count > 0) {
+            count -= 1;
+        }
     }
 
     public String toString() {

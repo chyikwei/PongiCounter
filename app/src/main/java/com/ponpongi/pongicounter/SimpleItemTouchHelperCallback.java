@@ -9,7 +9,7 @@ import android.util.Log;
  * Created by chyikwei on 8/4/2016.
  */
 public class SimpleItemTouchHelperCallback  extends ItemTouchHelper.Callback{
-    private final ItemTouchHelperAdapter mAdapter;
+    protected final ItemTouchHelperAdapter mAdapter;
 
     public SimpleItemTouchHelperCallback(ItemTouchHelperAdapter adapter) {
         mAdapter = adapter;
@@ -33,10 +33,10 @@ public class SimpleItemTouchHelperCallback  extends ItemTouchHelper.Callback{
     }
 
     @Override
-    public boolean onMove(RecyclerView recyclerView, ViewHolder viewHolder,
+    public boolean onMove(RecyclerView recyclerView, ViewHolder source,
                           ViewHolder target) {
-        mAdapter.onItemMove(viewHolder.getAdapterPosition(), target.getAdapterPosition());
-        return true;
+        mAdapter.onItemMove(source.getAdapterPosition(), target.getAdapterPosition());
+        return false;
     }
 
     @Override

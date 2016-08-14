@@ -46,7 +46,17 @@ public class ItemAdapter extends Adapter<CounterViewHolder> implements ItemTouch
                 }
         );
 
+        viewHolder.minusBtn.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        item.decrement();
+                        viewHolder.count.setText(item.getStrCount());
+                    }
+                }
+        );
     }
+
     @Override
     public void onBindViewHolder(final CounterViewHolder viewHolder, int i) {
         final CounterItem item = items.get(i);
@@ -56,6 +66,9 @@ public class ItemAdapter extends Adapter<CounterViewHolder> implements ItemTouch
         //TODO: update this part
         if (isCardView) {
             setClickListener(viewHolder, item);
+        } else {
+            //list view
+            viewHolder.minusBtn.setEnabled(false);
         }
     }
 
@@ -96,4 +109,11 @@ public class ItemAdapter extends Adapter<CounterViewHolder> implements ItemTouch
         notifyItemMoved(fromPosition, toPosition);
     }
 
+    @Override
+    public void onItemSelected() {
+    }
+
+    @Override
+    public void onItemClear() {
+    }
 }
