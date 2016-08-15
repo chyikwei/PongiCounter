@@ -51,11 +51,12 @@ public class SimpleItemTouchHelperCallback  extends ItemTouchHelper.Callback{
     @Override
     public void onSelectedChanged(RecyclerView.ViewHolder viewHolder, int actionState) {
         // We only want the active item to change
-        if (actionState != ItemTouchHelper.ACTION_STATE_IDLE) {
-            if (viewHolder instanceof ItemTouchHelperViewHolder) {
-                // Let the view holder know that this item is being moved or dragged
-                ItemTouchHelperViewHolder itemViewHolder = (ItemTouchHelperViewHolder) viewHolder;
+        if (viewHolder instanceof ItemTouchHelperViewHolder) {
+            ItemTouchHelperViewHolder itemViewHolder = (ItemTouchHelperViewHolder) viewHolder;
+            if (actionState != ItemTouchHelper.ACTION_STATE_IDLE) {
                 itemViewHolder.onItemSelected();
+            } else {
+                itemViewHolder.onItemClear();
             }
         }
         super.onSelectedChanged(viewHolder, actionState);
@@ -63,8 +64,6 @@ public class SimpleItemTouchHelperCallback  extends ItemTouchHelper.Callback{
 
     @Override
     public void clearView(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
-        super.clearView(recyclerView, viewHolder);
-
         viewHolder.itemView.setAlpha(ALPHA_FULL);
 
         if (viewHolder instanceof ItemTouchHelperViewHolder) {
@@ -72,5 +71,6 @@ public class SimpleItemTouchHelperCallback  extends ItemTouchHelper.Callback{
             ItemTouchHelperViewHolder itemViewHolder = (ItemTouchHelperViewHolder) viewHolder;
             itemViewHolder.onItemClear();
         }
+        super.clearView(recyclerView, viewHolder);
     }
 }

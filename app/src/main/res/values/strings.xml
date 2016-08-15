@@ -10,4 +10,8 @@
     <string name="fragment_hint">Counter Name</string>
     <string name="btn_ok">Ok</string>
     <string name="btn_cancel">Cancel</string>
+    <!--card element -->
+    <string name="minus_btn_text">-1</string>
+    <string name="default_text">Default</string>
+    <string name="default_num">100</string>
 </resources>

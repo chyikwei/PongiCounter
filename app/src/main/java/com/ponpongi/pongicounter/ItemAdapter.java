@@ -1,5 +1,6 @@
 package com.ponpongi.pongicounter;
 
+import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,6 +60,14 @@ public class ItemAdapter extends Adapter<CounterViewHolder> implements ItemTouch
         final CounterItem item = items.get(i);
         viewHolder.title.setText(item.getName());
         viewHolder.count.setText(item.getStrCount());
+        // set background color
+        if (viewHolder.itemView instanceof CardView) {
+            ((CardView) viewHolder.itemView).setCardBackgroundColor(item.getColor());
+            Log.d("onBindViewHolder", "card view: " + i);
+        } else {
+            viewHolder.itemView.setBackgroundColor(item.getColor());
+            Log.d("onBindViewHolder", "list view: " + i);
+        }
 
         //TODO: update this part
         if (isCardView) {
@@ -71,6 +80,7 @@ public class ItemAdapter extends Adapter<CounterViewHolder> implements ItemTouch
 
     @Override
     public CounterViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+        final CounterItem item = items.get(i);
         if(isCardView) {
             item_layout = R.layout.card_item;
         } else {
@@ -81,7 +91,7 @@ public class ItemAdapter extends Adapter<CounterViewHolder> implements ItemTouch
                 from(viewGroup.getContext()).
                 inflate(item_layout, viewGroup, false);
 
-        return new CounterViewHolder(itemView);
+        return new CounterViewHolder(itemView, item);
     }
 
     @Override

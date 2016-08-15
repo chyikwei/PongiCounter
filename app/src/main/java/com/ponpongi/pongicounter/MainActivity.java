@@ -1,6 +1,7 @@
 package com.ponpongi.pongicounter;
 
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.net.Uri;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
@@ -165,8 +166,8 @@ public class MainActivity extends AppCompatActivity implements EditNewItemDialog
     }
 
     @Override
-    public void onFinishEditDialog(String inputText) {
-        data_list.add(0, new CounterItem(inputText));
+    public void onFinishEditDialog(String inputText, int color) {
+        data_list.add(0, new CounterItem(inputText, color));
         //adapter.notifyDataSetChanged();
         dataUpdateNotifier.notifyDataUpdate(data_list);
         Toast.makeText(this, "Add item " + inputText, Toast.LENGTH_SHORT).show();
