@@ -1,11 +1,15 @@
 package com.ponpongi.pongicounter;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.content.res.ResourcesCompat;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -47,6 +51,15 @@ public class AddItemDialogFragment extends DialogFragment {
     }
 
     @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        Dialog dialog = super.onCreateDialog(savedInstanceState);
+
+        // request a window without the title
+        dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+        return dialog;
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_add_item, container);
@@ -55,9 +68,32 @@ public class AddItemDialogFragment extends DialogFragment {
         cancelButton = (Button) view.findViewById(R.id.fragment_cancel);
         colorGroup = (RadioGroup) view.findViewById(R.id.color_selector);
 
-        getDialog().setTitle("New Item");
+        //set diaglog
+        //getDialog().setTitle("New Item");
         getDialog().setCanceledOnTouchOutside(true);
 
+        // input text
+        mEditText.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(s.toString().trim().length()==0){
+                    okButton.setEnabled(false);
+                } else {
+                    okButton.setEnabled(true);
+                }
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
+
+        //ok button
+        //disable by default
+        okButton.setEnabled(false);
         okButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 EditNewItemDialogListener activity = (EditNewItemDialogListener) getActivity();
@@ -74,6 +110,7 @@ public class AddItemDialogFragment extends DialogFragment {
             }
         });
 
+        //cancel button
         cancelButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 getDialog().dismiss();

@@ -19,4 +19,5 @@
     <string name="minus_btn_text">-1</string>
     <string name="default_text">Default</string>
     <string name="default_num">100</string>
+    <string name="new_counter">New Counter</string>
 </resources>
