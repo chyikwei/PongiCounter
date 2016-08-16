@@ -45,15 +45,5 @@
         android:src="@mipmap/ic_mode_edit_black_24dp"
         android:alpha="0.4"
         android:background="@android:color/transparent"
-        android:layout_alignParentRight="true"
-        android:adjustViewBounds="true" />
-
-    <Button
-        android:id="@+id/minus_btn"
-        android:textSize="20sp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="invisible"
-        android:layout_alignParentBottom="true"/>
-
+        android:layout_alignParentRight="true" />
 </RelativeLayout>

@@ -5,7 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.widget.ImageButton;
 
 import java.util.List;
 
@@ -29,7 +29,9 @@ public class CardItemAdapter extends BaseItemAdapter {
                 }
         );
 
-        viewHolder.minusBtn.setOnClickListener(
+        ImageButton minusBtn =  (ImageButton) viewHolder.itemView.findViewById(R.id.minus_btn);
+
+        minusBtn.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {

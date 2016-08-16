@@ -1,11 +1,13 @@
 package com.ponpongi.pongicounter;
 
-import android.support.v7.widget.CardView;
+import android.nfc.Tag;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -14,8 +16,23 @@ import java.util.List;
  */
 public class ListItemAdapter extends BaseItemAdapter {
 
+    public static final String TAG = "ListItemAdapter";
+
     public ListItemAdapter(List<CounterItem> items) {
         this.items = items;
+    }
+
+    private void setClickListener(final CounterViewHolder viewHolder, final CounterItem item) {
+        ImageButton btn = (ImageButton) viewHolder.itemView.findViewById(R.id.edit_img_btn);
+
+        btn.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Log.d(TAG, "img btn click");
+                    }
+                }
+        );
     }
 
     @Override
@@ -27,8 +44,7 @@ public class ListItemAdapter extends BaseItemAdapter {
         ImageView imageView = (ImageView) viewHolder.itemView.findViewById(R.id.color_icon);
         imageView.setBackgroundColor(item.getColor());
         Log.d("onBindViewHolder", "list view: " + i);
-
-        viewHolder.minusBtn.setEnabled(false);
+        setClickListener(viewHolder, item);
     }
 
     @Override

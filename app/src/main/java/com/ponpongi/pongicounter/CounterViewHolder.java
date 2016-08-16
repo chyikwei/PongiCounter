@@ -16,14 +16,12 @@ import com.ponpongi.pongicounter.touchHelper.ItemTouchHelperViewHolder;
 public class CounterViewHolder extends ViewHolder implements ItemTouchHelperViewHolder{
     protected TextView title;
     protected TextView count;
-    protected Button minusBtn;
     final private CounterItem item;
 
     public CounterViewHolder(View v, CounterItem item) {
         super(v);
         title =  (TextView) v.findViewById(R.id.text_title);
         count = (TextView) v.findViewById(R.id.text_count);
-        minusBtn = (Button) v.findViewById(R.id.minus_btn);
         this.item = item;
     }
 
