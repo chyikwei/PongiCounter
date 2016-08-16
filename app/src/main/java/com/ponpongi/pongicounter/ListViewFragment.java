@@ -25,7 +25,7 @@ public class ListViewFragment extends Fragment implements DataUpdateNotifier {
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
 
-    private ItemAdapter adapter;
+    private ListItemAdapter adapter;
     private List<CounterItem> data_list;
 
     public ListViewFragment() {
@@ -70,7 +70,7 @@ public class ListViewFragment extends Fragment implements DataUpdateNotifier {
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new ItemAdapter(data_list, false);
+        adapter = new ListItemAdapter(data_list);
         recyclerView.setAdapter(adapter);
 
         // drag and drop

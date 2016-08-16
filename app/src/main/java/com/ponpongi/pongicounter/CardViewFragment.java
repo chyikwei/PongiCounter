@@ -26,7 +26,7 @@ public class CardViewFragment extends Fragment implements DataUpdateNotifier {
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
 
-    private ItemAdapter adapter;
+    private CardItemAdapter adapter;
     private List<CounterItem> data_list;
 
     public CardViewFragment() {
@@ -64,7 +64,7 @@ public class CardViewFragment extends Fragment implements DataUpdateNotifier {
         recyclerView.setHasFixedSize(true);
         layoutManager = new GridLayoutManager(getContext(), 2);
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new ItemAdapter(data_list, true);
+        adapter = new CardItemAdapter(data_list);
         recyclerView.setAdapter(adapter);
 
         // drag and drop

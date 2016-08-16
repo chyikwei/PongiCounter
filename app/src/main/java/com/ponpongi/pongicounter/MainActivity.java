@@ -1,13 +1,14 @@
 package com.ponpongi.pongicounter;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.net.Uri;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,6 +21,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.ponpongi.pongicounter.AddItemDialogFragment.EditNewItemDialogListener;
 import com.ponpongi.pongicounter.notifier.DataUpdateNotifier;
+import com.ponpongi.pongicounter.utils.PreferenceUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,10 +30,7 @@ import java.lang.reflect.Type;
 public class MainActivity extends AppCompatActivity implements EditNewItemDialogListener {
 
     private static final String PREF_NAME = "com.ponpongi.pongicounter.perference";
-    private static final String PREF_KEY = "com.ponpongi.pongicounter.data_list";
-    private static final String PREF_ISCARDVIEW_KEY = "com.ponpongi.pongicounter.is_card_view";
     private static final String TAG = "MainActivity";
-    private boolean isCardView;
     private DataUpdateNotifier dataUpdateNotifier;
     List<CounterItem> data_list;
     /**
@@ -46,38 +45,14 @@ public class MainActivity extends AppCompatActivity implements EditNewItemDialog
         setContentView(R.layout.activity_main);
 
         //load data from preference
+        Log.d(TAG, "onCreate");
         SharedPreferences pref = getApplicationContext().getSharedPreferences(PREF_NAME, MODE_PRIVATE);
-        data_list = load_data_list(pref);
-        isCardView = load_is_cardview(pref);
-
-        Log.i(TAG, "load cardView: " + isCardView);
-        if (isCardView) {
-            showCardView();
-        } else {
-            showListView();
-        }
+        data_list = PreferenceUtils.loadCOunterData(pref);
+        showCardView();
 
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
-    }
-
-    private List<CounterItem> load_data_list(SharedPreferences pref) {
-        List<CounterItem> data;
-        String dataString = pref.getString(PREF_KEY, "");
-        Log.v(TAG, "load data:" + dataString);
-        if (dataString.length() > 0) {
-            Type listType = new TypeToken<ArrayList<CounterItem>>() {
-            }.getType();
-            data = new Gson().fromJson(dataString, listType);
-        } else {
-            data = new ArrayList<CounterItem>();
-        }
-        return data;
-    }
-
-    private boolean load_is_cardview(SharedPreferences pref) {
-        return pref.getBoolean(PREF_ISCARDVIEW_KEY, true);
     }
 
     @Override
@@ -99,14 +74,8 @@ public class MainActivity extends AppCompatActivity implements EditNewItemDialog
 
         //store data
         SharedPreferences pref = getApplicationContext().getSharedPreferences(PREF_NAME, MODE_PRIVATE);
-        SharedPreferences.Editor editor = pref.edit();
-        Gson gson = new Gson();
-        String jsonInString = gson.toJson(data_list);
-        Log.i(TAG, "Save data: " + jsonInString);
-        editor.putString(PREF_KEY, jsonInString);
-        editor.putBoolean(PREF_ISCARDVIEW_KEY, isCardView);
-        Log.i(TAG, "Save cardView: " + isCardView);
-        editor.commit();
+        PreferenceUtils.dumpCounterData(pref, data_list);
+
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client.disconnect();
@@ -125,18 +94,16 @@ public class MainActivity extends AppCompatActivity implements EditNewItemDialog
             case R.id.add_item:
                 showAddDialog();
                 return true;
-            case R.id.grid_item:
-                if (!isCardView) {
-                    isCardView = true;
-                    showCardView();
-                }
+
+            case R.id.edit_item:
+                //store data
+                SharedPreferences pref = getApplicationContext().getSharedPreferences(PREF_NAME, MODE_PRIVATE);
+                PreferenceUtils.dumpCounterData(pref, data_list);
+                //start new activity
+                Intent intent = new Intent(MainActivity.this, EditActivity.class);
+                startActivityForResult(intent, 0);
                 return true;
-            case R.id.list_item:
-                if (isCardView) {
-                    isCardView = false;
-                    showListView();
-                }
-                return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -145,14 +112,6 @@ public class MainActivity extends AppCompatActivity implements EditNewItemDialog
     private void showCardView() {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         CardViewFragment fragment = CardViewFragment.newInstance(data_list);
-        transaction.replace(R.id.main_fragment, fragment);
-        transaction.commit();
-        dataUpdateNotifier = fragment;
-    }
-
-    private void showListView() {
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        ListViewFragment fragment = ListViewFragment.newInstance(data_list);
         transaction.replace(R.id.main_fragment, fragment);
         transaction.commit();
         dataUpdateNotifier = fragment;
@@ -168,7 +127,6 @@ public class MainActivity extends AppCompatActivity implements EditNewItemDialog
     @Override
     public void onFinishEditDialog(String inputText, int color) {
         data_list.add(0, new CounterItem(inputText, color));
-        //adapter.notifyDataSetChanged();
         dataUpdateNotifier.notifyDataUpdate(data_list);
         Toast.makeText(this, "Add item " + inputText, Toast.LENGTH_SHORT).show();
     }
@@ -192,4 +150,5 @@ public class MainActivity extends AppCompatActivity implements EditNewItemDialog
         );
         AppIndex.AppIndexApi.start(client, viewAction);
     }
+
 }
