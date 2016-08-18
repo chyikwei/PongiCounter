@@ -11,12 +11,17 @@
 
     <style name="CustomDialog" parent="@style/Theme.AppCompat.Light.Dialog">
         <item name="android:windowNoTitle">false</item>
-        <item name="android:layout_margin">@dimen/dialog_margin</item>
+        <item name="android:textColor">@color/colorText</item>
     </style>
 
     <style name="RadioButtonLigtGreen" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorAccent">@color/colorLightGreen</item>
         <item name="colorPrimary">@color/colorLightGreen</item>
+    </style>
+
+    <style name="DailogButton" parent="@style/Widget.AppCompat.Button.Borderless">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/text_color_selector</item>
     </style>
 
 </resources>

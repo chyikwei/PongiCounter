@@ -53,9 +53,11 @@ public class AddItemDialogFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         Dialog dialog = super.onCreateDialog(savedInstanceState);
-
+        dialog.setTitle("Add a counter");
+        dialog.setCanceledOnTouchOutside(true);
+        //setStyle(DialogFragment.STYLE_NORMAL, R.style.CustomDialog);
         // request a window without the title
-        dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+        //dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         return dialog;
     }
 
@@ -67,10 +69,6 @@ public class AddItemDialogFragment extends DialogFragment {
         okButton = (Button) view.findViewById(R.id.fragment_ok);
         cancelButton = (Button) view.findViewById(R.id.fragment_cancel);
         colorGroup = (RadioGroup) view.findViewById(R.id.color_selector);
-
-        //set diaglog
-        //getDialog().setTitle("New Item");
-        getDialog().setCanceledOnTouchOutside(true);
 
         // input text
         mEditText.addTextChangedListener(new TextWatcher() {

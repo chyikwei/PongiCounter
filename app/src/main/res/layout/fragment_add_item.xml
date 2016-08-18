@@ -6,27 +6,17 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center">
 
-    <TextView
-        android:id="@+id/fragment_title"
-        android:layout_marginTop="20dp"
-        android:text="@string/new_counter"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:textSize="@dimen/dialog_text_size"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
     <EditText
         android:id="@+id/fragment_title_name"
-        android:layout_below="@+id/fragment_title"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="22dp"
+        android:layout_marginRight="24dp"
         android:layout_width="match_parent"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
         android:layout_height="wrap_content"
         android:inputType="text"
         android:hint="@string/fragment_hint"
         android:textColorHint="@color/colorLightGray"
+        android:backgroundTint="@color/colorText"
         android:textSize="@dimen/dialog_text_size"
         android:imeOptions="actionDone"
         />
@@ -34,19 +24,18 @@
     <TextView
         android:id="@+id/color_selector_title"
         android:layout_below="@+id/fragment_title_name"
-        android:layout_marginTop="30dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginLeft="24dp"
+
         android:text="Color"
-        android:textSize="@dimen/dialog_text_size"
+        android:textSize="18sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <RadioGroup
         android:id="@+id/color_selector"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="24dp"
         android:checkedButton="@+id/checked_color"
         android:layout_below="@+id/color_selector_title"
         android:layout_width="wrap_content"
@@ -93,23 +82,25 @@
 
     <Button
         android:id="@+id/fragment_ok"
-        android:layout_marginTop="20sp"
-        android:layout_marginRight="20dp"
+        android:layout_marginTop="22dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="0dp"
         android:layout_alignParentRight="true"
         android:text="@string/btn_ok"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/color_selector"
-        style="?android:attr/borderlessButtonStyle"/>
+        style="@style/DailogButton"/>
 
     <Button
         android:id="@+id/fragment_cancel"
         android:text="@string/btn_cancel"
-        android:layout_marginTop="20sp"
+        android:layout_marginTop="22dp"
+        android:layout_marginBottom="10dp"
         android:layout_toLeftOf="@+id/fragment_ok"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/color_selector"
-        style="?android:attr/borderlessButtonStyle"/>
+        style="@style/DailogButton"/>
 
 </RelativeLayout>

@@ -18,7 +18,7 @@
 
     <dimen name="minus_btn_text_size">20sp</dimen>
 
-    <dimen name="color_selector_h_margin">5sp</dimen>
+    <dimen name="color_selector_h_margin">8dp</dimen>
 
 
 </resources>

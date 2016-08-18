@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#50E3C2</color>
     <color name="colorPrimaryDark">#47CEB0</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#4DD0E1</color>
 
     <!-- selector color-->
     <color name="colorSyan">#4DD0E1</color>
@@ -12,6 +12,10 @@
     <color name="colorWhite">#FFFFFF</color>
 
     <color name="colorLightGray">#DDDDDD</color>
+    <color name="colorText">#87000000</color>
+    <color name="colorDisableText">#38000000</color>
+
+    <color name="colorBLue">#2196F3</color>
 
 
 </resources>
