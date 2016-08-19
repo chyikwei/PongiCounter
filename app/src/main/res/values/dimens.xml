@@ -20,5 +20,13 @@
 
     <dimen name="color_selector_h_margin">8dp</dimen>
 
+    <!-- edit page-->
+    <dimen name="edit_text_size">40sp</dimen>
+    <dimen name="edit_title_text_size">20sp</dimen>
+    <dimen name="edit_sec_margin">24dp</dimen>
+    <dimen name="edit_internal_margin">8dp</dimen>
+
+    <dimen name="edit_h_margin">8dp</dimen>
+
 
 </resources>

@@ -1,5 +1,7 @@
 package com.ponpongi.pongicounter;
 
+import android.content.Context;
+import android.content.Intent;
 import android.nfc.Tag;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -29,7 +31,11 @@ public class ListItemAdapter extends BaseItemAdapter {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Log.d(TAG, "img btn click");
+                        //start new activity
+                        Context context = view.getContext();
+                        Intent intent = new Intent(context, ItemEditActivity.class);
+                        Log.d(TAG, "start_context");
+                        context.startActivity(intent);
                     }
                 }
         );
