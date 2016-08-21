@@ -15,13 +15,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 
+import com.ponpongi.pongicounter.utils.ColorUtils;
+import com.ponpongi.pongicounter.utils.SelectorColors;
+
 /**
  * Created by chyikwei on 8/2/2016.
  */
 public class AddItemDialogFragment extends DialogFragment {
 
     public interface EditNewItemDialogListener {
-        void onFinishEditDialog(String inputText, int color);
+        void onFinishEditDialog(String inputText, String colorStr);
     }
 
     private EditText mEditText;
@@ -34,20 +37,25 @@ public class AddItemDialogFragment extends DialogFragment {
     }
 
     //TODO: retire this later. should parse color from button directly
-    private int getColorFromButton(int selected) {
-        int r_color_id;
-        if (selected == R.id.color_syan) {
-            r_color_id = R.color.colorSyan;
-        } else if (selected == R.id.color_yellow) {
-            r_color_id = R.color.colorYellow;
-        } else if (selected == R.id.color_light_green) {
-            r_color_id = R.color.colorLightGreen;
-        } else if (selected == R.id.color_light_pink) {
-            r_color_id = R.color.colorLigihtPink;
-        } else {
-            r_color_id = R.color.colorLightGray;
+    private String getColorFromButton(int selected) {
+        SelectorColors color;
+        switch (selected) {
+            case  R.id.color_syan:
+                color = SelectorColors.SYAN;
+                break;
+            case  R.id.color_yellow:
+                color = SelectorColors.YELLOW;
+                break;
+            case  R.id.color_light_green:
+                color = SelectorColors.LIGHTGREEN;
+                break;
+            case  R.id.color_light_pink:
+                color = SelectorColors.LIGHTPINK;
+                break;
+            default:
+                color = SelectorColors.SYAN;
         }
-        return ResourcesCompat.getColor(getResources(), r_color_id, null);
+        return color.getCode();
     }
 
     @Override
@@ -100,9 +108,9 @@ public class AddItemDialogFragment extends DialogFragment {
                 String itemName = mEditText.getText().toString();
                 //get color
                 int checkedButtonId = colorGroup.getCheckedRadioButtonId();
-                int color = getColorFromButton(checkedButtonId);
+                String colorStr = getColorFromButton(checkedButtonId);
 
-                activity.onFinishEditDialog(itemName, color);
+                activity.onFinishEditDialog(itemName, colorStr);
                 getDialog().dismiss();
                 return;
             }

@@ -8,6 +8,7 @@
     <string name="menu_add">Add New</string>
     <!-- label -->
     <string name="edit_activity_label">Edit</string>
+    <string name="empty_label"></string>
     <string name="main_activity_label">Pongi Counter</string>
 
 
@@ -20,4 +21,7 @@
     <string name="default_text">Default</string>
     <string name="default_num">100</string>
     <string name="new_counter">New Counter</string>
+
+    <!-- edit item -->
+    <string name="menu_save">SAVE</string>
 </resources>

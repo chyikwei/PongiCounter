@@ -22,8 +22,10 @@
         android:id="@+id/edit_name"
         android:layout_marginTop="@dimen/edit_internal_margin"
         android:text="@string/default_text"
+        android:inputType="text|textCapWords|textAutoCorrect"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:imeOptions="actionDone"
         style="@style/EditText"/>
 
     <View
@@ -42,17 +44,17 @@
         style="@style/EditTitleText"/>
 
     <RadioGroup
-        android:id="@+id/color_selector"
+        android:id="@+id/edit_color_selector"
         android:layout_marginTop="@dimen/edit_internal_margin"
         android:layout_marginLeft="5dp"
-        android:checkedButton="@+id/checked_color"
+        android:checkedButton="@+id/edit_checked_color"
         android:layout_below="@+id/color_selector_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <android.support.v7.widget.AppCompatRadioButton
-            android:id="@+id/color_syan"
+            android:id="@+id/edit_color_syan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="@dimen/color_selector_h_margin"
@@ -62,7 +64,7 @@
             android:text=""/>
 
         <android.support.v7.widget.AppCompatRadioButton
-            android:id="@+id/color_yellow"
+            android:id="@+id/edit_color_yellow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="@dimen/color_selector_h_margin"
@@ -72,7 +74,7 @@
             android:text=""/>
 
         <android.support.v7.widget.AppCompatRadioButton
-            android:id="@+id/color_light_green"
+            android:id="@+id/edit_color_light_green"
             android:buttonTint="@color/colorLightGreen"
             android:layout_marginRight="@dimen/color_selector_h_margin"
             android:layout_marginTop="@dimen/edit_internal_margin"
@@ -82,7 +84,7 @@
             android:text=""/>
 
         <android.support.v7.widget.AppCompatRadioButton
-            android:id="@+id/color_light_pink"
+            android:id="@+id/edit_color_light_pink"
             android:layout_marginRight="@dimen/color_selector_h_margin"
             android:layout_marginTop="@dimen/edit_internal_margin"
             android:buttonTint="@color/colorLigihtPink"
@@ -119,10 +121,11 @@
             android:text="@string/default_num"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:imeOptions="actionDone"
             style="@style/EditText" />
 
         <ImageButton
-            android:id="@+id/refresh_btn"
+            android:id="@+id/reset_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"

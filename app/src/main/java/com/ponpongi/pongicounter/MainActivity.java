@@ -125,8 +125,8 @@ public class MainActivity extends AppCompatActivity implements EditNewItemDialog
     }
 
     @Override
-    public void onFinishEditDialog(String inputText, int color) {
-        data_list.add(0, new CounterItem(inputText, color));
+    public void onFinishEditDialog(String inputText, String colorStr) {
+        data_list.add(0, new CounterItem(inputText, colorStr));
         dataUpdateNotifier.notifyDataUpdate(data_list);
         Toast.makeText(this, "Add item " + inputText, Toast.LENGTH_SHORT).show();
     }

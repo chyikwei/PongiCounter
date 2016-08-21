@@ -36,7 +36,11 @@
 
         <activity
             android:name=".ItemEditActivity"
-            android:label="@string/edit_activity_label">
+            android:label="@string/empty_label">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".EditActivity" />
+
         </activity>
 
     </application>

@@ -1,15 +1,18 @@
 package com.ponpongi.pongicounter;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
-import android.nfc.Tag;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.Toast;
+
+import com.ponpongi.pongicounter.utils.ColorUtils;
+import com.ponpongi.pongicounter.utils.Constants;
 
 import java.util.List;
 
@@ -24,8 +27,19 @@ public class ListItemAdapter extends BaseItemAdapter {
         this.items = items;
     }
 
+    private Activity getActivity(Context context) {
+        while (context instanceof ContextWrapper) {
+            if (context instanceof Activity) {
+                return (Activity)context;
+            }
+            context = ((ContextWrapper)context).getBaseContext();
+        }
+        return null;
+    }
+
     private void setClickListener(final CounterViewHolder viewHolder, final CounterItem item) {
         ImageButton btn = (ImageButton) viewHolder.itemView.findViewById(R.id.edit_img_btn);
+        final int index = this.items.indexOf(item);
 
         btn.setOnClickListener(
                 new View.OnClickListener() {
@@ -33,9 +47,14 @@ public class ListItemAdapter extends BaseItemAdapter {
                     public void onClick(View view) {
                         //start new activity
                         Context context = view.getContext();
+                        Activity activity = getActivity(context);
                         Intent intent = new Intent(context, ItemEditActivity.class);
+                        intent.putExtra(Constants.EDIT_ITEM_INDEX, index);
+                        intent.putExtra(Constants.EDIT_ITEM_NAME, item.getName());
+                        intent.putExtra(Constants.EDIT_ITEM_COUNT, item.getCount());
+                        intent.putExtra(Constants.EDIT_ITEM_COLOR, ColorUtils.colorToStr(item.getColor()));
                         Log.d(TAG, "start_context");
-                        context.startActivity(intent);
+                        activity.startActivityForResult(intent, Constants.EDIT_ITEM_CODE);
                     }
                 }
         );

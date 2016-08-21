@@ -51,4 +51,11 @@ public class PreferenceUtils {
         editor.commit();
     }
 
+    public static void clearPreference(SharedPreferences pref) {
+        SharedPreferences.Editor editor = pref.edit();
+        Log.d(TAG, "Reset data");
+        editor.putString(PREF_KEY, "");
+        editor.commit();
+    }
+
 }

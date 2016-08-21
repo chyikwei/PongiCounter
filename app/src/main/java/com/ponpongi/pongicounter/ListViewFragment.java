@@ -1,17 +1,20 @@
 package com.ponpongi.pongicounter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.ponpongi.pongicounter.notifier.DataUpdateNotifier;
 import com.ponpongi.pongicounter.touchHelper.SimpleItemTouchHelperCallback;
+import com.ponpongi.pongicounter.utils.Constants;
 
 import java.util.List;
 
@@ -22,6 +25,7 @@ import java.util.List;
  * create an instance of this fragment.
  */
 public class ListViewFragment extends Fragment implements DataUpdateNotifier {
+    private static String TAG= "ListViewFragment";
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
 
@@ -89,5 +93,31 @@ public class ListViewFragment extends Fragment implements DataUpdateNotifier {
     @Override
     public void onDetach() {
         super.onDetach();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        Log.d(TAG, "save clicked");
+        super.onActivityResult(requestCode, resultCode, intent);
+        // if requestCode matches from CreateItemsActivity
+        if (requestCode == Constants.EDIT_ITEM_CODE && resultCode == Constants.EDIT_ITEM_DONE) {
+            int index = intent.getIntExtra(Constants.EDIT_ITEM_INDEX, -1);
+            String name = intent.getStringExtra(Constants.EDIT_ITEM_NAME);
+            int count = intent.getIntExtra(Constants.EDIT_ITEM_COUNT, -1);
+            String colorStr = intent.getStringExtra(Constants.EDIT_ITEM_COLOR);
+
+            Log.d(TAG, "update index: " + index);
+            Log.d(TAG, "update name: " + name);
+            Log.d(TAG, "update count: " + count);
+            Log.d(TAG, "update colorStr: " + colorStr);
+
+            if (index >=0 & index < data_list.size()) {
+                CounterItem item = data_list.get(index);
+                item.setName(name);
+                item.setCount(count);
+                item.setColorStr(colorStr);
+            }
+            this.adapter.notifyItemChanged(index);
+        }
     }
 }

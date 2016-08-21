@@ -2,20 +2,15 @@ package com.ponpongi.pongicounter;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.ponpongi.pongicounter.notifier.DataUpdateNotifier;
 import com.ponpongi.pongicounter.utils.PreferenceUtils;
 
-import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.List;
 
 public class EditActivity extends AppCompatActivity {
@@ -66,6 +61,17 @@ public class EditActivity extends AppCompatActivity {
         SharedPreferences pref = getApplicationContext().getSharedPreferences(PREF_NAME, MODE_PRIVATE);
         PreferenceUtils.dumpCounterData(pref, data_list);
         this.finish();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        // included to allow fragment to receive onActivityResult
+        Log.d(TAG, "onActivityResult");
+        super.onActivityResult(requestCode, resultCode, intent);
+
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.edit_fragment);
+        fragment.onActivityResult(requestCode, resultCode, intent);
+
     }
 
 }

@@ -2,6 +2,8 @@ package com.ponpongi.pongicounter;
 
 import android.graphics.Color;
 
+import com.ponpongi.pongicounter.utils.ColorUtils;
+
 /**
  * Created by chyikwei on 7/30/2016.
  *
@@ -9,12 +11,12 @@ import android.graphics.Color;
  */
 public class CounterItem {
     private String name;
-    private int  color;
+    private String colorStr;
     private int count;
 
-    public CounterItem(String name, int color) {
+    public CounterItem(String name, String colorStr) {
         this.name = name;
-        this.color = color;
+        this.colorStr = colorStr;
         this.count = 0;
     }
 
@@ -27,7 +29,7 @@ public class CounterItem {
     }
 
     public int getColor() {
-        return this.color;
+        return ColorUtils.parseColor(this.colorStr);
     }
 
     public String getStrCount() {
@@ -42,6 +44,18 @@ public class CounterItem {
         if (count > 0) {
             count -= 1;
         }
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setColorStr(String colorStr) {
+        this.colorStr = colorStr;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
     }
 
     public String toString() {
