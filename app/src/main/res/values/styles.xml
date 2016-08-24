@@ -48,4 +48,11 @@
         <item name="android:background">@color/colorText</item>
     </style>
 
+    <style name="ListSectionLine">
+        <item name="android:layout_marginLeft">0dp</item>
+        <item name="android:layout_marginRight">0dp</item>
+        <item name="android:background">@color/colorText</item>
+        <item name="android:alpha">0.3</item>
+    </style>
+
 </resources>
