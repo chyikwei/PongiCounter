@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ponpongi.pongicounter.utils.Constants;
@@ -28,7 +29,7 @@ public class ItemEditActivity extends AppCompatActivity {
     private int index;
 
     EditText editName;
-    EditText editCount;
+    TextView editCount;
     RadioGroup colorSelector;
     ImageButton resetButton;
     MenuItem menuSave;
@@ -40,7 +41,7 @@ public class ItemEditActivity extends AppCompatActivity {
         setContentView(R.layout.activity_item_edit);
 
         editName = (EditText) findViewById(R.id.edit_name);
-        editCount = (EditText) findViewById(R.id.edit_number);
+        editCount = (TextView) findViewById(R.id.edit_number);
         colorSelector = (RadioGroup) findViewById(R.id.edit_color_selector);
         resetButton = (ImageButton) findViewById(R.id.reset_btn);
         Intent intent = getIntent();
@@ -77,6 +78,7 @@ public class ItemEditActivity extends AppCompatActivity {
                 return false;
             }
         });
+        editName.addTextChangedListener(new InputTextLengthWatcher(14));
 
         //reset
         resetButton.setOnClickListener(
@@ -85,7 +87,6 @@ public class ItemEditActivity extends AppCompatActivity {
                     public void onClick(View view) {
                         //reset editCount
                         editCount.setText("0");
-                        editCount.setSelection(1);
                     }
                 }
         );

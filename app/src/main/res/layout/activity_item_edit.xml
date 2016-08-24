@@ -114,14 +114,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/edit_internal_margin">
-        <EditText
+        <TextView
             android:id="@+id/edit_number"
-            android:digits="1234567890"
-            android:inputType="number"
             android:text="@string/default_num"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:imeOptions="actionDone"
             style="@style/EditText" />
 
         <ImageButton

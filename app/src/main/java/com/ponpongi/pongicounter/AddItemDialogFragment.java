@@ -79,22 +79,17 @@ public class AddItemDialogFragment extends DialogFragment {
         colorGroup = (RadioGroup) view.findViewById(R.id.color_selector);
 
         // input text
-        mEditText.addTextChangedListener(new TextWatcher() {
+        mEditText.addTextChangedListener(new InputTextLengthWatcher(14) {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                super.onTextChanged(s, start, before, count);
                 if(s.toString().trim().length()==0){
                     okButton.setEnabled(false);
                 } else {
                     okButton.setEnabled(true);
                 }
             }
-
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-            @Override
-            public void afterTextChanged(Editable s) {}
         });
 
         //ok button
