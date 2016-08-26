@@ -11,4 +11,5 @@ public class Constants {
     public final static String EDIT_ITEM_INDEX = "EDIT_INDEX";
 
     public final static int EDIT_ITEM_DONE = 0;
+    public final static int EDIT_ITEM_CANCEL = 1;
 }

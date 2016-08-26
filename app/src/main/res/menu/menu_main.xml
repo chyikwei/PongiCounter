@@ -5,13 +5,6 @@
     tools:context=".MainActivity">
 
     <item
-        android:id="@+id/add_item"
-        android:icon="@mipmap/ic_add_white_24dp"
-        android:title="@string/menu_add"
-        app:showAsAction="always"
-        />
-
-    <item
         android:id="@+id/edit_item"
         android:icon="@mipmap/ic_mode_edit_white_24dp"
         android:title="@string/menu_list_view"
