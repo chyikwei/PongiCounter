@@ -59,6 +59,11 @@ public class MainActivity extends AppCompatActivity implements EditNewItemDialog
 
     @Override
     protected void onStop() {
+        Log.d(TAG, "onStop");
+        //store data
+        SharedPreferences pref = getApplicationContext().getSharedPreferences(PREF_NAME, MODE_PRIVATE);
+        PreferenceUtils.dumpCounterData(pref, data_list);
+
         super.onStop();
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -74,10 +79,6 @@ public class MainActivity extends AppCompatActivity implements EditNewItemDialog
         );
         AppIndex.AppIndexApi.end(client, viewAction);
 
-        //store data
-        SharedPreferences pref = getApplicationContext().getSharedPreferences(PREF_NAME, MODE_PRIVATE);
-        PreferenceUtils.dumpCounterData(pref, data_list);
-
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client.disconnect();
@@ -85,8 +86,18 @@ public class MainActivity extends AppCompatActivity implements EditNewItemDialog
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        Log.d(TAG, "onCreateOptionsMenu");
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
+    }
+
+    @Override
+    public  void onResume() {
+        Log.d(TAG, "onResume");
+        super.onResume();
+        SharedPreferences pref = getApplicationContext().getSharedPreferences(PREF_NAME, MODE_PRIVATE);
+        data_list = PreferenceUtils.loadCOunterData(pref);
+        showCardView();
     }
 
     @Override
@@ -128,6 +139,7 @@ public class MainActivity extends AppCompatActivity implements EditNewItemDialog
 
     @Override
     public void onFinishEditDialog(String inputText, String colorStr) {
+        Log.d(TAG, "onFinishEditDialog");
         data_list.add(0, new CounterItem(inputText, colorStr));
         dataUpdateNotifier.notifyDataUpdate(data_list);
         Toast.makeText(this, "Add item " + inputText, Toast.LENGTH_SHORT).show();
@@ -135,6 +147,8 @@ public class MainActivity extends AppCompatActivity implements EditNewItemDialog
 
     @Override
     public void onStart() {
+        Log.d(TAG, "onStart");
+
         super.onStart();
 
         // ATTENTION: This was auto-generated to implement the App Indexing API.

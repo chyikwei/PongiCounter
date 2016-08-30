@@ -46,12 +46,10 @@ public class EditActivity extends AppCompatActivity {
     protected void onPause() {
         Log.d(TAG, "onPause");
         Log.d(TAG, "list size: " + data_list.size());
-
-        super.onPause();
         //store data
-
         SharedPreferences pref = getApplicationContext().getSharedPreferences(PREF_NAME, MODE_PRIVATE);
         PreferenceUtils.dumpCounterData(pref, data_list);
+        super.onPause();
     }
 
     @Override
