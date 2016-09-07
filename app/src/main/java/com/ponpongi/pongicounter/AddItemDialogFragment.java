@@ -43,6 +43,9 @@ public class AddItemDialogFragment extends DialogFragment {
             case  R.id.color_syan:
                 color = SelectorColors.SYAN;
                 break;
+            case  R.id.color_red:
+                color = SelectorColors.RED;
+                break;
             case  R.id.color_yellow:
                 color = SelectorColors.YELLOW;
                 break;
@@ -51,6 +54,9 @@ public class AddItemDialogFragment extends DialogFragment {
                 break;
             case  R.id.color_light_pink:
                 color = SelectorColors.LIGHTPINK;
+                break;
+            case  R.id.color_purple:
+                color = SelectorColors.PURPLE;
                 break;
             default:
                 color = SelectorColors.SYAN;

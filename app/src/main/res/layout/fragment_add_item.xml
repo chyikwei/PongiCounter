@@ -53,6 +53,15 @@
             android:text=""/>
 
         <android.support.v7.widget.AppCompatRadioButton
+            android:id="@+id/color_red"
+            android:layout_marginRight="@dimen/color_selector_h_margin"
+            android:buttonTint="@color/colorRed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text=""/>
+
+        <android.support.v7.widget.AppCompatRadioButton
             android:id="@+id/color_yellow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -78,6 +87,16 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text=""/>
+
+        <android.support.v7.widget.AppCompatRadioButton
+            android:id="@+id/color_purple"
+            android:layout_marginRight="@dimen/color_selector_h_margin"
+            android:buttonTint="@color/colorPurple"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text=""/>
+
     </RadioGroup>
 
     <Button

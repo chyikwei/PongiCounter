@@ -105,6 +105,12 @@ public class ItemEditActivity extends AppCompatActivity {
                 btn.setChecked(true);
                 break;
 
+            case RED:
+                Log.d(TAG, "RED selected");
+                btn = (RadioButton) colorSelector.findViewById(R.id.edit_color_red);
+                btn.setChecked(true);
+                break;
+
             case YELLOW:
                 Log.d(TAG, "YELLOW selected");
                 btn = (RadioButton) colorSelector.findViewById(R.id.edit_color_yellow);
@@ -123,6 +129,12 @@ public class ItemEditActivity extends AppCompatActivity {
                 btn.setChecked(true);
                 break;
 
+            case PURPLE:
+                Log.d(TAG, "PURPLE selected");
+                btn = (RadioButton) colorSelector.findViewById(R.id.edit_color_purple);
+                btn.setChecked(true);
+                break;
+
             default:
                 Log.d(TAG, "default selected");
                 btn = (RadioButton) colorSelector.findViewById(R.id.edit_color_syan);
@@ -138,6 +150,9 @@ public class ItemEditActivity extends AppCompatActivity {
             case  R.id.edit_color_syan:
                 color = SelectorColors.SYAN;
                 break;
+            case  R.id.edit_color_red:
+                color = SelectorColors.RED;
+                break;
             case  R.id.edit_color_yellow:
                 color = SelectorColors.YELLOW;
                 break;
@@ -146,6 +161,9 @@ public class ItemEditActivity extends AppCompatActivity {
                 break;
             case  R.id.edit_color_light_pink:
                 color = SelectorColors.LIGHTPINK;
+                break;
+            case  R.id.edit_color_purple:
+                color = SelectorColors.PURPLE;
                 break;
             default:
                 color = SelectorColors.SYAN;

@@ -5,10 +5,12 @@
     <color name="colorAccent">#4DD0E1</color>
 
     <!-- selector color-->
-    <color name="colorSyan">#4DD0E1</color>
-    <color name="colorYellow">#FFEB3B</color>
-    <color name="colorLightGreen">#B8E986</color>
-    <color name="colorLigihtPink">#FDBCDA</color>
+    <color name="colorSyan">#81C5F4</color>
+    <color name="colorYellow">#F3EA79</color>
+    <color name="colorLightGreen">#98E6BE</color>
+    <color name="colorLigihtPink">#FFBFB9</color>
+    <color name="colorRed">#E985B3</color>
+    <color name="colorPurple">#C2A9F1</color>
 
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorLightGray">#DDDDDD</color>

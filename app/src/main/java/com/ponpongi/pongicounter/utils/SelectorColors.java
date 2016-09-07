@@ -7,10 +7,12 @@ import android.graphics.Color;
  */
 public enum SelectorColors {
 
-    SYAN("#4DD0E1"),
-    YELLOW("#FFEB3B"),
-    LIGHTGREEN("#B8E986"),
-    LIGHTPINK("#FDBCDA");
+    SYAN("#81C5F4"),
+    RED("#E985B3"),
+    YELLOW("#F3EA79"),
+    LIGHTGREEN("#98E6BE"),
+    LIGHTPINK("#FFBFB9"),
+    PURPLE("#C2A9F1") ;
 
     private String code;
 
